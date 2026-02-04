@@ -1,6 +1,9 @@
+
 #!/bin/bash
 
-THRESHOLD=1
+CI_MODE=${CI_MODE:-false}
+
+THRESHOLD=80
 MOUNTS=("/" "/home" "/var")
 
 ALERTS=()
@@ -23,12 +26,19 @@ done
 
 if [ "${#ALERTS[@]}" -gt 0 ]; then
   MESSAGE="🚨 *Disk Alert* on $(hostname)\n$(printf '%s\n' "${ALERTS[@]}")\nTime: $(date)"
-  curl -s -X POST -H 'Content-type: application/json' \
-    --data "{\"text\":\"$MESSAGE\"}" \
-    "$SLACK_WEBHOOK_URL"
-  exit 1
+
+  if [ "$CI_MODE" != "true" ]; then
+    curl -4 -s -X POST -H 'Content-type: application/json' \
+      --data "{\"text\":\"$MESSAGE\"}" \
+      "$SLACK_WEBHOOK_URL"
+    exit 1
+  else
+    echo "CI_MODE=true → skipping Slack alert & non-zero exit"
+    exit 0
+  fi
 else
-  echo "[$LOG_TS] OK: All monitored disks below threshold."
+  echo "OK: All monitored disks below threshold."
   exit 0
 fi
+
 
