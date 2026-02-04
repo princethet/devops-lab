@@ -112,3 +112,7 @@ chmod +x disk_check.sh
 ```bash
 */5 * * * * /home/prince/devops/disk_check.sh >> /home/prince/devops/disk_check.log 2>&1
 ```
+
+
+## Known Limitations
+Slack web UI may intermittently fail to load; webhook delivery confirmed via API(ok) and mobile app.
