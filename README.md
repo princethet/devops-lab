@@ -41,6 +41,7 @@ export SLACK_WEBHOOK_URL=<YOUR_SLACK_WEBHOOK_URL>
 ```
 
 ## Architecture
+```bash
 Bash Script → Cron Scheduler → Slack Alert (Webhook)
                      |
                       Log File → Logrotate
@@ -67,7 +68,7 @@ Bash Script → Cron Scheduler → Slack Alert (Webhook)
                                 └────────────┘
 
 
-
+```
 
 ## Log Rotation
 Logs are managed using `logrotate` to prevent disk overuse.
