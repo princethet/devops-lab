@@ -42,8 +42,32 @@ export SLACK_WEBHOOK_URL=<YOUR_SLACK_WEBHOOK_URL>
 
 ## Architecture
 Bash Script → Cron Scheduler → Slack Alert (Webhook)
-                     ↘
+                     |
                       Log File → Logrotate
+
+
+                ┌─────────────┐
+                │ Cron        │
+                │ Scheduler   │
+                └──────┬──────┘
+                       │
+                ┌──────▼──────┐
+                │ Bash Script │
+                └──────┬──────┘
+                       │
+        ┌──────────────┴──────────────┐
+        │                             │
+┌───────▼────────┐           ┌────────▼────────┐
+│ Slack Alert    │           │ Log File        │
+│ (Webhook)      │           │ disk_check.log  │
+└────────────────┘           └────────┬────────┘
+                                      │
+                                ┌─────▼──────┐
+                                │ Logrotate  │
+                                └────────────┘
+
+
+
 
 ## Log Rotation
 Logs are managed using `logrotate` to prevent disk overuse.
@@ -68,18 +92,22 @@ git clone https://github.com/princethet/devops-lab.git
 cd devops-lab
 ```
 
+2. Set Slack webhook
 ```bash
 export SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_URL>"
 ```
 
+3. Make script executable
 ```bash
 chmod +x disk_check.sh
 ```
 
+4. Run manually
 ```bash
 ./disk_check.sh
 ```
 
+5. ADD cron Job
 ```bash
 */5 * * * * /home/prince/devops/disk_check.sh >> /home/prince/devops/disk_check.log 2>&1
 ```
