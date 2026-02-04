@@ -32,8 +32,54 @@ disk usage crosses a defined threshold.
 ### Environment Variable
 Set Slack webhook URL as an environment variable:
 ```bash
-export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/XXXX"
+export SLACK_WEBHOOK_URL=<YOUR_SLACK_WEBHOOK_URL>
+```
 
 ### Cron Job
 ```bash
 */5 * * * * /home/prince/devops/disk_check.sh >> /home/prince/devops/disk_check.log 2>&1
+```
+
+## Architecture
+Bash Script → Cron Scheduler → Slack Alert (Webhook)
+                     ↘
+                      Log File → Logrotate
+
+## Log Rotation
+Logs are managed using `logrotate` to prevent disk overuse.
+
+Configuration:
+```conf
+/home/prince/devops/disk_check.log {
+    daily
+    rotate 7
+    compress
+    missingok
+    notifempty
+    copytruncate
+}
+```
+
+## How to Run
+
+1. Clone the repository
+```bash
+git clone https://github.com/princethet/devops-lab.git
+cd devops-lab
+```
+
+```bash
+export SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_URL>"
+```
+
+```bash
+chmod +x disk_check.sh
+```
+
+```bash
+./disk_check.sh
+```
+
+```bash
+*/5 * * * * /home/prince/devops/disk_check.sh >> /home/prince/devops/disk_check.log 2>&1
+```
