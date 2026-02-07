@@ -116,3 +116,20 @@ chmod +x disk_check.sh
 
 ## Known Limitations
 Slack web UI may intermittently fail to load; webhook delivery confirmed via API(ok) and mobile app.
+
+
+## Docker Usage
+
+This project can be run inside a Docker container for portability.
+
+### Build image
+```bash
+docker build -t disk-monitor .
+```
+
+#with slack
+```bash
+docker run --rm -e SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_URL>" disk-monitor
+```
+
+
