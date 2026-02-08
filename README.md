@@ -127,7 +127,7 @@ This project can be run inside a Docker container for portability.
 docker build -t disk-monitor .
 ```
 
-###Run with slack alerts
+### Run with slack alerts
 > ⚠️ Do not commit your real Slack webhook URL..
 > Use environment variables for security.
 
