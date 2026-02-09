@@ -10,9 +10,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@v2
-        with:
-          scandir: .
-          severity: error
-          shellcheck_flags: --exclude=SC1091
-          ignore_paths: Dockerfile Dockerfile.com
+        run: shellcheck disk_check.sh
