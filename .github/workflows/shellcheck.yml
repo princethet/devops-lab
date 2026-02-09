@@ -13,3 +13,6 @@ jobs:
         uses: ludeeus/action-shellcheck@v2
         with:
           scandir: .
+          severity: error
+          shellcheck_flags: --exclude=SC1091
+          ignore_paths: Dockerfile Dockerfile.com
