@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 CI_MODE=${CI_MODE:-false}

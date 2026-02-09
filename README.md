@@ -136,3 +136,13 @@ docker run --rm -e SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_URL>" disk-monitor
 ```
 
 
+### Host Disk Monitoring (Docker Volume)
+
+This container can monitor the host filesystem using Docker bind mounts.
+
+```bash
+docker run --rm \
+  -v /:/host:ro \
+  -e SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_URL>" \
+  disk-monitor
+```
