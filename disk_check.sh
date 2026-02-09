@@ -2,7 +2,7 @@
 
 CI_MODE=${CI_MODE:-false}
 
-THRESHOLD=80
+THRESHOLD=1
 MOUNTS=("/" "/home" "/var")
 
 ALERTS=()

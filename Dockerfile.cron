@@ -1,0 +1,17 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && \
+    apt-get install -y cron curl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY disk_check.sh /app/disk_check.sh
+RUN chmod +x /app/disk_check.sh
+
+RUN echo "*/5 * * * * /app/disk_check.sh >> /var/log/disk_check.log 2>&1" > /etc/cron.d/disk-check
+RUN chmod 0644 /etc/cron.d/disk-check
+RUN crontab /etc/cron.d/disk-check
+
+RUN touch /var/log/disk_check.log
+
+CMD ["cron", "-f"]
